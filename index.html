@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <title>Prusa Diff</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <style>
+   .chromeFrameInstallDefaultStyle {
+     margin-top: 10px;
+     width: 800px;
+     border: 5px solid blue;
+   }
+  </style>
+  
+  <script src="js/Three.js"></script>
+  <script src="js/plane.js"></script>
+  <script src="js/thingiview.js"></script>
+
+  <script>
+    window.onload = function() {
+      // You may want to place these lines inside an onload handler
+      CFInstall.check({
+        mode: "inline", // the default
+        node: "prompt"
+      });
+
+      thingiurlbase = "js";
+      thingiview = new Thingiview("viewer");
+      thingiview.setObjectColor('#C0D8F0');
+      thingiview.setBackgroundColor('#ffffff');
+      
+      thingiview.initScene();
+    }  
+
+    function diffStls(stlFilename){
+      thingiview.loadSTLDiff(['../old/'+stlFilename, '../new/'+stlFilename])
+    }
+
+    function newStl(stlFilename){
+      thingiview.loadSTL('../new/'+stlFilename)
+    }
+
+    function oldStl(stlFilename){
+      thingiview.loadSTL('../old/'+stlFilename)
+    }
+
+  </script>
+</head>
+<body>
+
+<div id="prompt">
+  <!-- if IE without GCF, prompt goes here -->
+</div>
+
+<header>
+  <h2>Prusa Diff</h2>
+  <p>Highlighting the differences between <a href="https://github.com/prusajr/PrusaMendel/tree/oldmaster">V1</a> and <a href="https://github.com/prusajr/PrusaMendel/tree/master">V2</a> of Josef Prusa's Mendel designs.</p>
+</header>
+
+<div id="sidebar" style="float:left;width:30%;height:600px;overflow-y:scroll;">
+    <b>Updated</b><br>
+    <input type="radio" name="stlfilename" onclick="diffStls('bar-clamp.stl')">bar-clamp.stl<br>
+    <input type="radio" name="stlfilename" onclick="diffStls('belt-clamp.stl')">belt-clamp.stl<br>
+    <input type="radio" name="stlfilename" onclick="diffStls('coupling.stl')">coupling.stl<br>
+    <input type="radio" name="stlfilename" onclick="diffStls('endstop-holder.stl')">endstop-holder.stl<br>
+    <input type="radio" name="stlfilename" onclick="diffStls('frame-vertex.stl')">frame-vertex.stl<br>
+    <input type="radio" name="stlfilename" onclick="diffStls('frame-vertex-foot.stl')">frame-vertex-foot.stl<br>
+    <input type="radio" name="stlfilename" onclick="diffStls('pulley.stl')">pulley.stl<br>
+    <input type="radio" name="stlfilename" onclick="diffStls('rod-clamp.stl')">rod-clamp.stl<br>
+    <input type="radio" name="stlfilename" onclick="diffStls('wade.stl')">wade.stl<br>
+    <input type="radio" name="stlfilename" onclick="diffStls('x-carriage.stl')">x-carriage.stl<br>
+    <input type="radio" name="stlfilename" onclick="diffStls('x-end-idler.stl')">x-end-idler.stl<br>
+    <input type="radio" name="stlfilename" onclick="diffStls('x-end-motor.stl')">x-end-motor.stl<br>
+    <input type="radio" name="stlfilename" onclick="diffStls('z-motor-mount.stl')">z-motor-mount.stl<br>
+    <b>New</b><br>
+    <input type="radio" name="stlfilename" onclick="newStl('bearing-guide.stl')">bearing-guide.stl<br>
+    <input type="radio" name="stlfilename" onclick="newStl('belt-clamp-nut-holder.stl')">belt-clamp-nut-holder.stl<br>
+    <input type="radio" name="stlfilename" onclick="newStl('printable-bushing.stl')">printable-bushing.stl<br>
+    <input type="radio" name="stlfilename" onclick="newStl('printable-bushing-lm8uu.stl')">printable-bushing-lm8uu.stl<br>
+    <input type="radio" name="stlfilename" onclick="newStl('sanguinololu-holder.stl')">sanguinololu-holder.stl<br>
+    <input type="radio" name="stlfilename" onclick="newStl('wade-big.stl')">wade-big.stl<br>
+    <input type="radio" name="stlfilename" onclick="newStl('wade-small.stl')">wade-small.stl<br>
+    <input type="radio" name="stlfilename" onclick="newStl('ybrac-t.stl')">ybrac-t.stl<br>
+    <input type="radio" name="stlfilename" onclick="newStl('y-bushing.stl')">y-bushing.stl<br>
+    <b>Removed</b><br>
+    <input type="radio" name="stlfilename" onclick="oldStl('pla-bushing.stl')">pla-bushing.stl<br>
+    <input type="radio" name="stlfilename" onclick="oldStl('wadebits.stl')">wadebits.stl<br>
+    <input type="radio" name="stlfilename" onclick="oldStl('wadebits-pulleys.stl')">wadebits-pulleys.stl<br>
+    <input type="radio" name="stlfilename" onclick="oldStl('wadebits-small.stl')">wadebits-small.stl<br>
+    <input type="radio" name="stlfilename" onclick="oldStl('y-motor-bracket.stl')">y-motor-bracket.stl
+</div>
+
+<p style="text-align:center">
+  <input onclick="thingiview.setCameraView('top');" type="button" value="Top" /> 
+  <input onclick="thingiview.setCameraView('side');" type="button" value="Side" /> 
+  <input onclick="thingiview.setCameraView('bottom');" type="button" value="Bottom" /> 
+  <input onclick="thingiview.setCameraView('diagonal');" type="button" value="Diagonal" /> 
+ 
+  <input onclick="thingiview.setCameraZoom(5);" type="button" value="Zoom +" /> 
+  <input onclick="thingiview.setCameraZoom(-5);" type="button" value="Zoom -" /> 
+  Rotation: <input onclick="thingiview.setRotation(true);" type="button" value="on" /> | <input onclick="thingiview.setRotation(false);" type="button" value="off" />
+<br>
+    Background Color: <a href="#" onclick="thingiview.setBackgroundColor('#606060')">Gray</a> | <a href="#" onclick="thingiview.setBackgroundColor('#ffffff')">White</a> | <a href="#" onclick="thingiview.setBackgroundColor('#000000')">Black</a>
+    <input onclick="thingiview.setAddedOpacity(0.0);" type="button" value="Hide Added" />
+    <input onclick="thingiview.setAddedOpacity(0.5);" type="button" value="Show Added" />
+    <input onclick="thingiview.setRemovedOpacity(0.0);" type="button" value="Hide Removed" />
+    <input onclick="thingiview.setRemovedOpacity(0.5);" type="button" value="Show Removed" />
+</p>
+
+<div id="viewer" style="width:70%;height:600px;float:right"></div>
+<br clear="both">
+<footer>Powered by <a href="https://github.com/nrpatel/thingiview.js">Thingidiff</a> by nrpatel, a fork of <a href="https://github.com/tbuser/thingiview.js">Thingiview</a> by tbuser</footer>
+
+</body>
+</html>
